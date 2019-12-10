@@ -17,13 +17,13 @@ func Provider() *schema.Provider {
 			},
 			"user": {
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("JIRA_USER", nil),
 				Description: "User to be used",
 			},
 			"password": {
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				Sensitive:   true,
 				DefaultFunc: schema.EnvDefaultFunc("JIRA_PASSWORD", nil),
 				Description: "Password/API Key of the user",
