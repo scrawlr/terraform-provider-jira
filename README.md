@@ -1,8 +1,10 @@
 # terraform-provider-jira
 
-[![CircleCI](https://circleci.com/gh/fourplusone/terraform-provider-jira.svg?style=svg)](https://circleci.com/gh/fourplusone/terraform-provider-jira)
-
 Terraform Provider for managing JIRA. 
+
+__[Support this project on Patreon](https://www.patreon.com/fourplusone)__
+
+[![CircleCI](https://circleci.com/gh/fourplusone/terraform-provider-jira.svg?style=svg)](https://circleci.com/gh/fourplusone/terraform-provider-jira)
 
 ## Data Sources
 
@@ -151,6 +153,11 @@ resource "jira_filter" "filter" {
   permissions {
     type = "group"
     group_name = "Team A"
+  }
+
+  // Any authenticated user
+  permissions {
+    type = "authenticated"
   }
 }
 
