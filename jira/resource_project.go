@@ -17,6 +17,7 @@ type ProjectRequest struct {
 	ProjectTemplateKey  string `json:"projectTemplateKey,omitempty" structs:"projectTemplateKey,omitempty"`
 	Description         string `json:"description,omitempty" structs:"description,omitempty"`
 	Lead                string `json:"lead,omitempty" structs:"lead,omitempty"`
+	LeadAccountId       string `json:"leadAccountId,omitempty" structs:"leadAccountId,omitempty"`
 	URL                 string `json:"url,omitempty" structs:"url,omitempty"`
 	AssigneeType        string `json:"assigneeType,omitempty" structs:"assigneeType,omitempty"`
 	AvatarID            int    `json:"avatar_id,omitempty" structs:"avatar_id,omitempty"`
@@ -95,7 +96,14 @@ func resourceProject() *schema.Resource {
 			},
 			"lead": &schema.Schema{
 				Type:     schema.TypeString,
+				// Required: true,
+				Optional: true,
+			},
+			"lead_account_id": &schema.Schema{
+				Type:     schema.TypeString,
 				Required: true,
+				// TODO if posible move to computed / conditional optinal or split providers to server/cloud
+				// Optional: true,
 			},
 			"url": &schema.Schema{
 				Type:     schema.TypeString,
@@ -140,6 +148,7 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 			Key:  d.Get("key").(string),
 			Name: d.Get("name").(string),
 			Lead: d.Get("lead").(string),
+			LeadAccountId: d.Get("lead_account_id").(string),
 		}
 
 		returnedProject := new(SharedConfigurationProjectResponse)
@@ -168,6 +177,7 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 			ProjectTemplateKey:  d.Get("project_template_key").(string),
 			Description:         d.Get("description").(string),
 			Lead:                d.Get("lead").(string),
+			LeadAccountId:       d.Get("lead_account_id").(string),
 			URL:                 d.Get("url").(string),
 			AssigneeType:        d.Get("assignee_type").(string),
 			AvatarID:            d.Get("avatar_id").(int),
@@ -206,6 +216,7 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("name", project.Name)
 	d.Set("description", project.Description)
 	d.Set("lead", project.Lead)
+	// d.Set("lead_account_id", project.LeadAccountId)
 	d.Set("url", project.URL)
 	d.Set("assignee_type", project.AssigneeType)
 	d.Set("category_id", project.ProjectCategory.ID)
@@ -242,6 +253,7 @@ func resourceProjectUpdate(d *schema.ResourceData, m interface{}) error {
 		ProjectTemplateKey:  d.Get("project_template_key").(string),
 		Description:         d.Get("description").(string),
 		Lead:                d.Get("lead").(string),
+		LeadAccountId:       d.Get("lead_account_id").(string),
 		URL:                 d.Get("url").(string),
 		AssigneeType:        d.Get("assignee_type").(string),
 		AvatarID:            d.Get("avatar_id").(int),
